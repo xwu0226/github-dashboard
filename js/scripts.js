@@ -22,7 +22,7 @@ function executeSyncGithubRequest(url, success_callback, failure_callback) {
         cache: false,
         beforeSend: function (xhr) {
             /* Authorization header */
-            xhr.setRequestHeader("Authorization", "token 430b5060bf9b669569385180f356df182359c400");
+            xhr.setRequestHeader("Authorization", "token --");
         },
         success: success_callback,
         failure: failure_callback
@@ -39,7 +39,7 @@ function executeGithubPaginatedRequest(url, success_callback, failure_callback) 
             // check if there is a next page
             var nextpage_url = getNextPageLink(request.getResponseHeader('Link'))
             if (nextpage_url) {
-                console.log('will retrieve next page from ' + nextpage_url)
+                //console.log('will retrieve next page from ' + nextpage_url)
                 executeGithubPaginatedRequest(nextpage_url, success_callback, failure_callback)
             }
 
@@ -104,7 +104,7 @@ function getNextPageLink(linkHeader) {
     if(! linkHeader)
         return;
 
-    console.log(linkHeader)
+    //console.log(linkHeader)
     let links = linkHeader.split(',');
     for (var i = 0; i < links.length; i++) {
         let link = links[i];
