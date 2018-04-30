@@ -5,14 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Bootstrap 4, from LayoutIt!</title>
+    <title>Github Dashboard!</title>
 
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 <body>
 
@@ -64,6 +63,38 @@
 
     <div class="row">
         <div class="table-responsive">
+            <table id="table-apache-repositories" class="table table-striped">
+                <thead>
+                <th>Repository</th>
+                <th>Stars</th>
+                <th>Forks</th>
+                <th>Issues</th>
+                <th>PRs</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="table-responsive">
+            <table id="table-codait-repositories" class="table table-striped">
+                <thead>
+                <th>Repository</th>
+                <th>Stars</th>
+                <th>Forks</th>
+                <th>Issues</th>
+                <th>PRs</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="table-responsive">
             <table id="table-ibm-repositories" class="table table-striped">
                 <thead>
                 <th>Repository</th>
@@ -87,7 +118,6 @@
 <script type="text/javascript">
 
     function loadRepositoryDataToTable(table, data) {
-        console.log('calling loadRepositoryDataToTable ' + data.length)
         data.forEach(function (element) {
             //console.log('processing repository ' + element.full_name)
 
@@ -95,7 +125,7 @@
             if(element.open_pulls_count > 0) {
                 tr_with_style = "<tr class='table-success'>"
             }
-            let link = "<a href='" + element.html_url + "'>" + element.full_name + "</a>"
+            let link = "<a href='" + element.html_url + "' target='_blank'>" + element.full_name + "</a>"
             let row = tr_with_style
                 + "<td>" + link + "</td>"
                 + "<td>" + element.stargazers_count + "</td>"
@@ -111,14 +141,20 @@
 
     // A $( document ).ready() block.
     $(document).ready(function () {
-        /*
         loadOrganizationRepositories("users/lresende", "", function (data) {
             loadRepositoryDataToTable($('#table-personal-repositories tbody'), data)
         });
-        */
 
         loadOrganizationRepositories("orgs/jupyter-incubator", "(enterprise_gateway|nb2kg)", function (data) {
             loadRepositoryDataToTable($('#table-jupyter-repositories tbody'), data)
+        });
+
+        loadOrganizationRepositories("orgs/apache", "(.*toree.*|.*bahir.*|.*apache-website-template.*)", function (data) {
+            loadRepositoryDataToTable($('#table-apache-repositories tbody'), data)
+        });
+
+        loadOrganizationRepositories("orgs/CODAIT", ".*", function (data) {
+            loadRepositoryDataToTable($('#table-codait-repositories tbody'), data)
         });
 
         loadOrganizationRepositories("orgs/IBM", "^IBM\/MAX.*", function (data) {
